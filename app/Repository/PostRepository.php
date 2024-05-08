@@ -51,6 +51,6 @@
         {
             $post = Post::find($id);
             //更新資料
-            return $post ? $post->updated($data) : false;
+            return $post ? $post->update($data) : false;
         }
     }

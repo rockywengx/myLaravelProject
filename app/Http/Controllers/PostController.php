@@ -53,7 +53,7 @@ class PostController extends Controller
 
         //對要求進行驗證
         $validatedData  = $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|max:255|unique:posts',
             'content' => 'required'
         ]);
 
@@ -109,14 +109,16 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
+
         $validata = $request->validate([
             'title' => 'bail|required|max:255',
             'content' => 'required'
         ]);
+
         //回傳執行別為boolean
-        $updateresult = $this->postRepository->update($id, $validata->all());
+        $updateresult = $this->postRepository->update($validata, $id);
 
         if (!$updateresult){
             return response()->json(['message' => 'Post not updated'], 500);
