@@ -2,6 +2,7 @@
     namespace App\Repository;
 
     use App\Models\Entities\Post;
+    use Exception;
 
     class PostRepository
     {
@@ -32,13 +33,25 @@
 
         public function findOrFail(string $id)
         {
+            $model = Post::find($id);
+            if(empty($model)){
+                throw new Exception(get_class($model) . ': 找不到資料');
+            }
             //用主鍵找資料
-            return Post::find($id);
+            return $model;
         }
 
-        public function delete($id){
+        public function delete($id):bool
+        {
+
+            $model = Post::findOrFail($id);
+
+            if(!$model->delete()){
+                throw new Exception(get_class($model) . ': 刪除失敗');
+            }
             //用主鍵刪除資料
-            return Post::destroy($id);
+
+            return true;
         }
 
         public function store(array $data)
@@ -49,8 +62,12 @@
 
         public function update(array $data, $id)
         {
-            $post = Post::find($id);
-            //更新資料
-            return $post ? $post->update($data) : false;
+            $model = Post::finddOrFail($id);
+
+            if(!$model->update($data)){
+                throw new Exception(get_class($model) . ': 更新失敗');
+            }
+
+            return $model->refresh();
         }
     }

@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Repository\PostRepository;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\ResponseField;
+use Knuckles\Scribe\Attributes\ResponseFromFile;
+
+/**
+ * @group Post 部落格
+ */
 
 class PostController extends Controller
 {
@@ -16,8 +24,23 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 顯示所有文章
+     * 能自訂每頁顯示的筆數
+     * 初始每頁10筆的方式顯示
+     * 能增加條件查詢
+     * 能自訂欄位降冪或升冪排序
+     * 初始為id降冪排序
      */
+    #[QueryParam(name: 'filter', description: '條件查詢', type: 'string', example: 'hello')]
+    #[QueryParam(name: 'orderby', description: '欄位排序', type: 'object', example: '{"id": "desc"}')]
+    #[QueryParam(name: 'perpage', description: '每頁顯示的筆數', type: 'int', example: 10)]
+    #[QueryParam(name: 'page', description:'頁數', type:'int', example:1)]
+    #[Response( status: 404, description: 'No Content' )]
+    #[Response( status: 302, description:'Redirect' )]
+    #[ResponseFromFile(status: 200, path: './posts/index.json')]
+    #[ResponseField(name: 'id', description: '文章ID', example: 1)]
+    #[ResponseField(name: 'title', description: '文章標題', example: 'Hello World')]
+    #[ResponseField(name: 'content', description: '文章內容', example: 'Hello World')]
     public function index(Request $request)
     {
         $perpage = $request->input('perpage', 10);
@@ -46,9 +69,16 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新增文章
      */
-    public function store(Request $request)
+    #[QueryParam(name: 'title', description: '文章標題', type: 'string', example: 'Hello World')]
+    #[QueryParam(name: 'content', description: '文章內容', type: 'string', example: '早安')]
+    #[Response( status: 200, description: '新增失敗' )]
+    #[ResponseFromFile(status: 201, path: './posts/store.json')]
+    #[ResponseField(name: 'id', description: '文章ID', example: 1)]
+    #[ResponseField(name: 'title', description: '文章標題', example: 'Hello World')]
+    #[ResponseField(name: 'content', description: '文章內容', example: '早上好')]
+    public function store(Request  $request)
     {
 
         //對要求進行驗證
@@ -75,16 +105,22 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 回傳指定文章
      */
+    #[QueryParam(name: 'id', description: '文章ID', type: 'int', example: 1)]
+    #[Response( status: 200, description: 'No Content' )]
+    #[ResponseFromFile(status: 200, path: './posts/show.json')]
+    #[ResponseField(name: 'id', description: '文章ID', example: 1)]
+    #[ResponseField(name: 'title', description: '文章標題', example: 'Hello World')]
+    #[ResponseField(name: 'content', description: '文章內容', example: '早上好')]
     public function show(string $id)
     {
         //
         $post = $this->postRepository->findOrFail($id);
 
-        if ($post->isEmpty()) {
-            return response()->json(['message' => 'Post not found'], 404);
-        }
+        // if (empty($post)) {
+        //     return response()->json(['message' => 'Post not found'], 404);
+        // }
 
         return response()->json($post);
     }
@@ -107,8 +143,16 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 修改指定內容
      */
+    #[QueryParam(name: 'id', description: '文章ID', type: 'int', example: 1)]
+    #[QueryParam(name: 'title', description: '文章標題', type: 'string', example: 'Hello World')]
+    #[QueryParam(name: 'content', description: '文章內容', type: 'string', example: '早上好')]
+    #[Response( status: 200, description: '修改失敗' )]
+    #[ResponseFromFile(status: 200, path: './posts/update.json')]
+    #[ResponseField(name: 'id', description: '文章ID', example: 1)]
+    #[ResponseField(name: 'title', description: '文章標題', example: 'Hello World')]
+    #[ResponseField(name: 'content', description: '文章內容', example: '早上好')]
     public function update(Request $request, int $id)
     {
 
@@ -129,18 +173,22 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 刪除指定文章
      */
+    #[QueryParam(name: 'id', description: '文章ID', type: 'int', example: 1)]
+    #[Response( status: 200, description: '刪除失敗' )]
+    #[ResponseFromFile(status: 200, path: './posts/destroy.json')]
     public function destroy(string $id)
     {
         //
         $destroyresult = $this->postRepository->delete($id);
 
-        if ($destroyresult) {
-            return response()->json(['message' => 'Post deleted'], 200);
-        }
+        // if (!$destroyresult) {
+        //     return response()->json(['message' => 'Post not deleted'], 500);
+        // }
 
-        return response()->json(['message' => 'Post not deleted'], 500);
+        
+        return response()->json(['message' => 'Post deleted'], 200);
     }
 
 
