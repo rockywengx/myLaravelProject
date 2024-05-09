@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Http\Resources\PostResource;
 use App\Repository\PostRepository;
 use Illuminate\Http\Request;
 use Knuckles\Scribe\Attributes\BodyParam;
@@ -58,7 +59,7 @@ class PostController extends Controller
         if(empty($posts)){
             return response()->json(['message' => 'No Content'], 204);
         };
-        return response()->json($posts);
+        return PostResource::collection($posts);
         // return view('posts.index', compact('posts'));
     }
 
@@ -122,7 +123,7 @@ class PostController extends Controller
         //     return response()->json(['message' => 'Post not found'], 404);
         // }
 
-        return response()->json($post);
+        return PostResource::make($post);
     }
 
     /**
