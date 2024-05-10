@@ -20,4 +20,6 @@ class PostResource extends JsonResource
             'content' => $this->content
         ];
     }
+
+    
 }

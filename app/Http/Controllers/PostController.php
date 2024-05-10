@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Http\Resources\PostAndLogsResource;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\LogResource;
+use App\Http\Resources\LogCollectionResource;
 use App\Repository\PostRepository;
+use App\Repository\LogRepository;
 use Illuminate\Http\Request;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\QueryParam;
@@ -20,10 +24,12 @@ class PostController extends Controller
 {
 
     protected $postRepository;
+    protected $logRepository;
 
-    public function __construct(PostRepository $postRepository)
+    public function __construct(PostRepository $postRepository, LogRepository $logRepository)
     {
         $this->postRepository = $postRepository;
+        $this->logRepository = $logRepository;
     }
 
     /**
@@ -47,10 +53,11 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $perpage = $request->input('perpage', 10);
+        $filter = $request->input('filter', []);
         $order = $request->input('orderby', [ 'id' => 'desc' ]);
 
         //除了 perpage 以外的所有條件
-        $condition = $request->except(['perpage', 'filter']);
+        $condition = $request->except(['perpage', 'filter', 'oderby']);
 
         // $condition = $request->only(['title', 'content']);
 
@@ -99,6 +106,11 @@ class PostController extends Controller
             return response()->json(['message' => 'created is Not Succese'], 500);
         }
 
+        $this->logRepository->store([
+            'content' => $post->content,
+            'Post_id' => $post->id,
+            'ation' => 'create'
+        ]);
         // return response()->json(['message' => 'Post not created'], 500);
         //成功回傳成功代碼
         // return response()->json(["id" => $post->id]);
@@ -117,14 +129,22 @@ class PostController extends Controller
     #[ResponseField(name: 'content', description: '文章內容', example: '早上好')]
     public function show(string $id)
     {
-        //
+        //用post取相關的log
         $post = $this->postRepository->findOrFail($id);
+        $post->load('logs');
+        $logs = $post->logs;
+        $logResource = LogResource::collection($logs);
+
+
+        $logs = $this->logRepository->index(10,$id);
+
+        $postAndLogs = new PostAndLogsResource($post, $logs);
 
         // if (empty($post)) {
         //     return response()->json(['message' => 'Post not found'], 404);
         // }
 
-        return PostResource::make($post);
+        return $postAndLogs;
     }
 
     /**
@@ -165,6 +185,13 @@ class PostController extends Controller
         //回傳執行別為boolean
         $updateresult = $this->postRepository->update($request->all(), $id);
 
+        //在更新文章後，將更新的內容記錄到log中
+        $this->logRepository->store([
+            'content' => $updateresult->content,
+            'Post_id' => $updateresult->id,
+            'ation' => 'update'
+        ]);
+
         // if (!$updateresult){
         //     return response()->json(['message' => 'Post not updated'], 500);
         // }
@@ -181,13 +208,20 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         //
-        $destroyresult = $this->postRepository->delete($id);
+        $log = ['content' => 'delete post', 'Post_id' => $id, 'ation' => 'delete'];
+
+        $delect = $this->postRepository->delete($id);
+
+        if($delect){
+            $this->logRepository->store($log);
+        };
 
         // if (!$destroyresult) {
         //     return response()->json(['message' => 'Post not deleted'], 500);
         // }
 
         
+
         return response()->json(['message' => 'Post deleted'], 200);
     }
 
