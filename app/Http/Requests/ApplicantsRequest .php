@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Knuckles\Scribe\Attributes\BodyParam;
 
 class ApplicantsRequest  extends FormRequest
 {
@@ -15,10 +16,13 @@ class ApplicantsRequest  extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * 使用者輸入的資料驗證規則
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    #[BodyParam(name: 'first_name', description: 'first_name', required: true)]
+    #[BodyParam(name: 'last_name', description: 'last_name', required: true)]
+    #[BodyParam(name: 'email', description: 'email', required: true)]
     public function rules(): array
     {
         return [

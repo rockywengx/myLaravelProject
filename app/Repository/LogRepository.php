@@ -11,7 +11,7 @@
             //建立查詢
             $query = Log::query();
 
-            $query->where('Post_id', $id);
+            $query->where('post_id', $id);
 
             //條件查詢
             // if(!empty($condition)){
