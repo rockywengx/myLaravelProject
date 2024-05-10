@@ -25,3 +25,5 @@ Route::delete('/post/{id}', [PostController::class,'destroy']);
 
 //用resource方法，依據PostController內的每個function，各自建立一支符合RESTful API的路由 (GET、POST、PUT/PATCH、DELETE)，並以post作為路由前綴修飾，
 // Route::resource('post', 'PostController');
+
+Route::post('applicants', [ApplicantsController::class, 'store']);

@@ -87,8 +87,9 @@ class PostController extends Controller
         //     'content' => 'required'
         // ]);
 
-        //手動增加'user_id' => 1'的數據
-        $request['user_id'] = 1;
+        // //手動增加'user_id' => 1'的數據
+        // $request['user_id'] = $request->user()->id;
+
         //從驗證過的要求中取出所有數據並存儲
         $post = $this->postRepository->store($request->all());
         
