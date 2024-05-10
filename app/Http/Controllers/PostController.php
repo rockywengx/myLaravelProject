@@ -102,7 +102,7 @@ class PostController extends Controller
         // return response()->json(['message' => 'Post not created'], 500);
         //成功回傳成功代碼
         // return response()->json(["id" => $post->id]);
-        return response()->json($post);
+        return PostResource::make($post);
 
     }
 
@@ -163,13 +163,13 @@ class PostController extends Controller
         // ]);
 
         //回傳執行別為boolean
-        $updateresult = $this->postRepository->update($$request, $id);
+        $updateresult = $this->postRepository->update($request->all(), $id);
 
-        if (!$updateresult){
-            return response()->json(['message' => 'Post not updated'], 500);
-        }
+        // if (!$updateresult){
+        //     return response()->json(['message' => 'Post not updated'], 500);
+        // }
 
-        return response()->json(['message' => 'Post updated'], 200);
+        return PostResource::make($updateresult);
 
     }
 

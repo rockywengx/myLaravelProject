@@ -3,6 +3,7 @@
 namespace App\Models\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,9 +13,9 @@ class Post extends Model
         'user_id', 'title', 'content',
     ];
 
-    public function applicant()
+    public function applicant(): BelongsTo
     {
-        return $this->belongsTo('App\Entities\Applicant');
+        return $this->belongsTo("App\Models\Entities\Applicant");
     }
 
     protected static function boot()
@@ -32,7 +33,7 @@ class Post extends Model
 
 
         static::deleting(function ($post){
-            Log::info("Post deleted: " . $post->id);
+            Log::info("Post deleted: " . $post->id . ", title: " . $post->title . ", content: " . $post->content);
         });
 
         // static::deleting(function ($post) {

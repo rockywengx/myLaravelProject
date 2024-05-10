@@ -22,7 +22,7 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer',
+            'user_id' => 'required|integer|exists:applicants,id',
             'title' => 'required|string|max:255',
             'content' => 'required',
         ];
@@ -31,6 +31,7 @@ class PostRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'user_id.required' => 'User ID is required',
             'title.required' => 'Title is required',
             'content.required' => 'Content is required',
         ];

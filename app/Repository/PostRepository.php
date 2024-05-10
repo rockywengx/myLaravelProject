@@ -62,7 +62,7 @@
 
         public function update(array $data, $id)
         {
-            $model = Post::finddOrFail($id);
+            $model = Post::findOrFail($id);
 
             if(!$model->update($data)){
                 throw new Exception(get_class($model) . ': 更新失敗');

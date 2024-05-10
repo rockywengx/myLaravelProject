@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->foreignId('user_id')->references('id')->on('applicants')->onDelete('cascade');
             $table->string('title');
             $table->string('content');
             $table->timestamps();
