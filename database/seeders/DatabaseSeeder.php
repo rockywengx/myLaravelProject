@@ -17,12 +17,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'email_verified_at' => now(),
             'password' => bcrypt('123456'),
         ]);
 
         \App\Models\Entities\Post::factory(10)->create();
 
-       \App\Models\Entities\Post::factory()->create([
+        \App\Models\Entities\Post::factory()->create([
             'title' => 'Test Post',
             'content' => 'This is a test post.',
         ]);

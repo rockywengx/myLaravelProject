@@ -131,6 +131,7 @@ class PostController extends Controller
     #[ResponseField(name: 'content', description: '文章內容', example: '早上好')]
     public function show(string $id)
     {
+        dd($id);
         //用post取相關的log
         $post = $this->postRepository->findOrFail($id);
         $post->load('logs');

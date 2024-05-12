@@ -18,10 +18,10 @@ class Post extends Model
     {
         return $this->hasMany('App\Models\Entities\Log');
     }
-    public function applicant(): BelongsTo
-    {
-        return $this->belongsTo("App\Models\Entities\Applicant");
-    }
+    // public function applicant(): BelongsTo
+    // {
+    //     return $this->belongsTo("App\Models\Entities\Applicant");
+    // }
 
         public function user()
     {

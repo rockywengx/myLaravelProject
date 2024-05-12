@@ -19,7 +19,15 @@ class AuthController extends Controller
 {
     //
     public function login(Request $request){
-        $credentials = $request->only('email','password');
+        // $credentials = $request->only('email','password');
+        dd($request->all());
+
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+
 
         if (Auth::attempt($credentials)){
             $token = $request->user()->createToken('authToken')->plainTextToken;
