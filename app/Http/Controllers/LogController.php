@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\LogRepository;
 use App\Http\Resources\LogResource;
+use Knuckles\Scribe\Attributes\BodyParam;
+use Knuckles\Scribe\Attributes\ResponseField;
+use Knuckles\Scribe\Attributes\UrlParam;
 
 class LogController extends Controller
 {
@@ -16,8 +19,14 @@ class LogController extends Controller
         $this->logRepository = $logRepository;
     }
     /**
-     * Display a listing of the resource.
+     * 獲取指定用戶的日誌
      */
+    #[UrlParam(name: 'id', type: 'string', description: '用戶ID')]
+    #[BodyParam(name: 'perpage', type: 'integer', description: '每頁顯示條數', required: false)]
+    #[ResponseField(name: 'id', type: 'integer', description: '日誌ID')]
+    #[ResponseField(name: 'user_id', type: 'integer', description: '用戶ID')]
+    #[ResponseField(name: 'content', type: 'string', description: '日誌內容')]
+    #[ResponseField(name: 'ation', type: 'string', description: '操作')]
     public function index($id, Request $request)
     {
         $perpage = $request->input('perpage', 10);

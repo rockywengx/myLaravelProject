@@ -53,7 +53,7 @@ class ApplicantsController extends Controller
         $request['user_id'] = 1;
         //從驗證過的要求中取出所有數據並存儲
         $post = $this->ApplicantsRepository->store($request->all());
-        
+
 
         // $request->validated();
         if (empty($post)) {
