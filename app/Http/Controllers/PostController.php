@@ -42,7 +42,7 @@ class PostController extends Controller
      */
     #[QueryParam(name: 'filter', description: '條件查詢', type: 'object')]
     #[QueryParam(name: 'orderby', description: '欄位排序', type: 'string')]
-    #[QueryParam(name: 'perpage', description: '每頁顯示的筆數', type: 'int', example: 10)]
+    #[QueryParam(name: 'presage', description: '每頁顯示的筆數', type: 'int', example: 10)]
     #[QueryParam(name: 'page', description:'頁數', type:'int', example:1)]
     #[Response( status: 200, description: 'No Content' )]
     #[Response( status: 302, description:'Redirect' )]
@@ -52,16 +52,16 @@ class PostController extends Controller
     #[ResponseField(name: 'content', description: '文章內容', example: 'Hello World')]
     public function index(Request $request)
     {
-        $perpage = $request->input('perpage', 10);
+        $prepare = $request->input('prepare', 10);
         $filter = $request->input('filter', []);
         $order = $request->input('orderby', [ 'id' => 'desc' ]);
 
-        //除了 perpage 以外的所有條件
-        $condition = $request->except(['perpage', 'filter', 'oderby']);
+        //除了 prepare 以外的所有條件
+        $condition = $request->except(['prepare', 'filter', 'oderby']);
 
         // $condition = $request->only(['title', 'content']);
 
-        $posts = $this->postRepository->index($perpage, $condition, $order);
+        $posts = $this->postRepository->index($prepare, $condition, $order);
 
         if(empty($posts)){
             return response()->json(['message' => 'No Content'], 204);
@@ -98,8 +98,10 @@ class PostController extends Controller
         // $request['user_id'] = $request->user()->id;
 
         //從驗證過的要求中取出所有數據並存儲
-        $post = $this->postRepository->store($request->all());
-        
+        $post = $this->postRepository->store(
+            $request->all()
+        );
+
 
         // $request->validated();
         if (empty($post)) {
@@ -220,7 +222,7 @@ class PostController extends Controller
         //     return response()->json(['message' => 'Post not deleted'], 500);
         // }
 
-        
+
 
         return response()->json(['message' => 'Post deleted'], 200);
     }

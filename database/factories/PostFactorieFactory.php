@@ -14,6 +14,8 @@ class PostFactorieFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+     //規範假資料的形式
     public function definition(): array
     {
         return [

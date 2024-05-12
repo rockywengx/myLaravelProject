@@ -6,7 +6,7 @@
 
     class PostRepository
     {
-        public function index($perpage, $condition = [], $order = [])
+        public function index($prepare, $condition = [], $order = [])
         {
             //建立查詢
             $query = Applicant::query();
@@ -28,7 +28,7 @@
                 }
             };
 
-            return $query->paginate($perpage);
+            return $query->paginate($prepare);
         }
 
         public function findOrFail(string $id)
