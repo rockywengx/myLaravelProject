@@ -9,13 +9,12 @@ use Knuckles\Scribe\Attributes\ResponseField;
 
 /**
  * @group Auth
+ * 登入
  */
 
 #[BodyParam(name:'email', description:'用戶的電子郵件地址')]
 #[BodyParam(name:'password', description:'用戶的密碼')]
 #[ResponseField(name:'token', description:'用於訪問其他端點的令牌')]
-
-
 class AuthController extends Controller
 {
     //
