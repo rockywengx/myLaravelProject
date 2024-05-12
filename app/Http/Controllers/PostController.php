@@ -176,7 +176,7 @@ class PostController extends Controller
     #[ResponseField(name: 'id', description: '文章ID', example: 1)]
     #[ResponseField(name: 'title', description: '文章標題', example: 'Hello World')]
     #[ResponseField(name: 'content', description: '文章內容', example: '早上好')]
-    public function update(PostRequest $request, int $id)
+    public function update( int $id, PostRequest $request)
     {
 
         // $validata = $request->validate([
@@ -189,8 +189,9 @@ class PostController extends Controller
 
         //在更新文章後，將更新的內容記錄到log中
         $this->logRepository->store([
-            'content' => $updateresult->content,
-            'Post_id' => $updateresult->id,
+            'content' => $request->content,
+            'Post_id' => $request->id,
+            'user_id' => $request->user()->id,
             'ation' => 'update'
         ]);
 

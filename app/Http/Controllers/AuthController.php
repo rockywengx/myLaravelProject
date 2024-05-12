@@ -9,7 +9,7 @@ use Knuckles\Scribe\Attributes\ResponseField;
 
 /**
  * @group Auth
- * 登入
+ * 登入後返回令牌
  */
 
 #[BodyParam(name:'email', description:'用戶的電子郵件地址')]

@@ -23,6 +23,11 @@ class Post extends Model
         return $this->belongsTo("App\Models\Entities\Applicant");
     }
 
+        public function user()
+    {
+        return $this->belongsTo('App\Entities\User');
+    }
+
     // protected static function boot()
     // {
     //     parent::boot();
@@ -46,11 +51,8 @@ class Post extends Model
     //     // });
     // }
 
-    public function user()
-    {
-        return $this->belongsTo('App\Entities\User');
-    }
-    
+
+
     use HasFactory;
 }
 

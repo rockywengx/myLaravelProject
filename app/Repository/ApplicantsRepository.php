@@ -4,7 +4,7 @@
     use App\Models\Entities\Applicant;
     use Exception;
 
-    class PostRepository
+    class ApplicantsRepository
     {
         public function index($prepare, $condition = [], $order = [])
         {
