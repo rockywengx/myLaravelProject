@@ -38,6 +38,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('user',[AuthController::class,'login']);
 
 //當用到名稱為login的路由時，會導向到AuthController的login方法
-Route::post('login', function () {
-    return redirect()->route('user');
-})->name('login');
+// Route::post('login', function () {
+//     return redirect()->route('user');
+// })->name('login');

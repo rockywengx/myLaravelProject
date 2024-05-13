@@ -85,7 +85,7 @@ class PostController extends Controller
     #[BodyParam(name: 'content', description: '文章內容', type: 'string', example: '早安')]
     #[Response( status: 200, description: '新增失敗' )]
     #[ResponseField(name: 'id', description: '文章ID', example: 1)]
-    public function store(PostRequest  $request)
+    public function store(PostRequest $request)
     {
 
         //對要求進行驗證
@@ -96,7 +96,6 @@ class PostController extends Controller
 
         // //手動增加'user_id' => 1'的數據
         // $request['user_id'] = $request->user()->id;
-
         //從驗證過的要求中取出所有數據並存儲
         $post = $this->postRepository->store(
             $request->all()
