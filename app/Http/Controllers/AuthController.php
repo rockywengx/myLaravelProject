@@ -8,7 +8,7 @@ use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\ResponseField;
 
 /**
- * @group Auth
+ * @group Auth 用戶操作
  * 登入後返回令牌
  */
 
@@ -20,7 +20,6 @@ class AuthController extends Controller
     //
     public function login(Request $request){
         // $credentials = $request->only('email','password');
-        dd($request->all());
 
         $credentials = [
             'email' => $request->email,

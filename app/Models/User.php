@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\Sanctum;
 
 class User extends Authenticatable
 {
@@ -45,5 +46,15 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany('App\Entities\Post');
+    }
+
+    public function test_task_list_can_be_retrieved()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+        $response = $this->get('/api/post');
+        $response->assertStatus(200);
     }
 }

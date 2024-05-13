@@ -7,6 +7,44 @@ servers:
   -
     url: 'http://localhost'
 paths:
+  /api/user:
+    post:
+      summary: ''
+      operationId: postApiUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 用戶的電子郵件地址
+                  example: kbeatty@example.com
+                password:
+                  type: string
+                  description: 用戶的密碼
+                  example: "']zPcQ"
+              required:
+                - email
+                - password
+      security: []
+  /api/login:
+    post:
+      summary: ''
+      operationId: postApiLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
   /api/post:
     get:
       summary: "顯示所有文章\n能自訂每頁顯示的筆數\n初始每頁10筆的方式顯示\n能增加條件查詢\n能自訂欄位降冪或升冪排序\n初始為id降冪排序"
@@ -17,31 +55,26 @@ paths:
           in: query
           name: filter
           description: 條件查詢
-          example:
-            title: test
+          example: []
           required: true
           schema:
             type: object
             description: 條件查詢
-            example:
-              title: test
+            example: []
             properties: {  }
         -
           in: query
           name: orderby
           description: 欄位排序
-          example:
-            id: desc
+          example: atque
           required: true
           schema:
-            type: object
+            type: string
             description: 欄位排序
-            example:
-              id: desc
-            properties: {  }
+            example: atque
         -
           in: query
-          name: perpage
+          name: presage
           description: 每頁顯示的筆數
           example: 10
           required: true
@@ -115,6 +148,10 @@ paths:
             schema:
               type: object
               properties:
+                user_id:
+                  type: integer
+                  description: ''
+                  example: 17
                 title:
                   type: string
                   description: 文章標題
@@ -124,6 +161,7 @@ paths:
                   description: 文章內容
                   example: 早安
               required:
+                - user_id
                 - title
                 - content
       security: []
@@ -164,27 +202,7 @@ paths:
       summary: 修改指定內容
       operationId: ''
       description: ''
-      parameters:
-        -
-          in: query
-          name: title
-          description: 文章標題
-          example: 'Hello World'
-          required: true
-          schema:
-            type: string
-            description: 文章標題
-            example: 'Hello World'
-        -
-          in: query
-          name: content
-          description: 文章內容
-          example: 早上好
-          required: true
-          schema:
-            type: string
-            description: 文章內容
-            example: 早上好
+      parameters: []
       responses:
         200:
           description: 修改失敗
@@ -202,15 +220,20 @@ paths:
             schema:
               type: object
               properties:
+                user_id:
+                  type: integer
+                  description: ''
+                  example: 8
                 title:
                   type: string
-                  description: 'Must not be greater than 255 characters.'
-                  example: rbeuhgxudk
+                  description: 文章標題
+                  example: 'Hello World'
                 content:
                   type: string
-                  description: ''
-                  example: corporis
+                  description: 文章內容
+                  example: 早上好
               required:
+                - user_id
                 - title
                 - content
       security: []
@@ -240,6 +263,12 @@ paths:
         schema:
           type: string
 tags:
+  -
+    name: Auth
+    description: 登入後返回令牌
+  -
+    name: Endpoints
+    description: ''
   -
     name: 'Post 部落格'
     description: ''

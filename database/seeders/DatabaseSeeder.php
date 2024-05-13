@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Factories\PostFactory;
+use App\Models\Entities\Post;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,9 +23,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456'),
         ]);
 
-        \App\Models\Entities\Post::factory(10)->create();
 
-        \App\Models\Entities\Post::factory()->create([
+        // PostFactory::new()->count(10)->create();
+        Post::factory(10)->create();
+
+        Post::factory()->create([
             'title' => 'Test Post',
             'content' => 'This is a test post.',
         ]);

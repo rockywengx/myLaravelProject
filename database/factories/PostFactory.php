@@ -2,13 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Entities\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Entities>
  */
-class PostFactorieFactory extends Factory
+class PostFactory extends Factory
 {
+    protected $model = Post::class;
     /**
      * Define the model's default state.
      *
@@ -20,9 +22,8 @@ class PostFactorieFactory extends Factory
     {
         return [
             //
-            'id' => $this->faker->unique()->randomNumber(),
             'title' => $this->faker->sentence(),
-            'content' => $this->faker->paragraph(),
+            'content' => $this->faker->text(255),
         ];
     }
 }

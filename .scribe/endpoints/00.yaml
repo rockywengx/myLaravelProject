@@ -30,8 +30,7 @@ endpoints:
         name: filter
         description: 條件查詢
         required: true
-        example:
-          title: test
+        example: []
         type: object
         enumValues: []
         exampleWasSpecified: false
@@ -40,14 +39,13 @@ endpoints:
         name: orderby
         description: 欄位排序
         required: true
-        example:
-          id: desc
-        type: object
+        example: atque
+        type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
-      perpage:
-        name: perpage
+      presage:
+        name: presage
         description: 每頁顯示的筆數
         required: true
         example: 10
@@ -65,11 +63,9 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanQueryParameters:
-      filter:
-        title: test
-      orderby:
-        id: desc
-      perpage: 10
+      filter: []
+      orderby: atque
+      presage: 10
       page: 1
     bodyParameters: []
     cleanBodyParameters: []
@@ -226,6 +222,15 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
+      user_id:
+        name: user_id
+        description: ''
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
       title:
         name: title
         description: 文章標題
@@ -245,6 +250,7 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
+      user_id: 17
       title: 'Hello World'
       content: 早安
     fileParameters: []
@@ -298,7 +304,18 @@ endpoints:
         custom: []
     cleanUrlParameters:
       id: 1
-    queryParameters:
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      user_id:
+        name: user_id
+        description: ''
+        required: true
+        example: 8
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
       title:
         name: title
         description: 文章標題
@@ -317,31 +334,10 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         custom: []
-    cleanQueryParameters:
+    cleanBodyParameters:
+      user_id: 8
       title: 'Hello World'
       content: 早上好
-    bodyParameters:
-      title:
-        name: title
-        description: 'Must not be greater than 255 characters.'
-        required: true
-        example: rbeuhgxudk
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-      content:
-        name: content
-        description: ''
-        required: true
-        example: corporis
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanBodyParameters:
-      title: rbeuhgxudk
-      content: corporis
     fileParameters: []
     responses:
       -

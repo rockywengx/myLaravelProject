@@ -25,7 +25,7 @@ class Post extends Model
 
         public function user()
     {
-        return $this->belongsTo('App\Entities\User');
+        return $this->BelongsTo('App\Entities\User');
     }
 
     // protected static function boot()

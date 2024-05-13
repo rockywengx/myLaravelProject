@@ -10,11 +10,82 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "340fdbea-e38c-45ef-b7ae-a487657379c0",
+        "_postman_id": "ef117e32-a12f-4d79-b17a-e1c9a1f6f91a",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
+        {
+            "name": "Auth",
+            "description": "\u767b\u5165\u5f8c\u8fd4\u56de\u4ee4\u724c",
+            "item": [
+                {
+                    "name": "POST api\/user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"kbeatty@example.com\",\"password\":\"']zPcQ\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "POST api\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
         {
             "name": "Post \u90e8\u843d\u683c",
             "description": "",
@@ -27,19 +98,19 @@
                             "path": "api\/post",
                             "query": [
                                 {
-                                    "key": "filter[title]",
-                                    "value": "test",
+                                    "key": "filter[]",
+                                    "value": "",
                                     "description": "\u689d\u4ef6\u67e5\u8a62",
-                                    "disabled": false
+                                    "disabled": true
                                 },
                                 {
-                                    "key": "orderby[id]",
-                                    "value": "desc",
+                                    "key": "orderby",
+                                    "value": "atque",
                                     "description": "\u6b04\u4f4d\u6392\u5e8f",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "perpage",
+                                    "key": "presage",
                                     "value": "10",
                                     "description": "\u6bcf\u9801\u986f\u793a\u7684\u7b46\u6578",
                                     "disabled": false
@@ -51,7 +122,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/post?filter[title]=test&orderby[id]=desc&perpage=10&page=1"
+                            "raw": "{{baseUrl}}\/api\/post?filter[]=&orderby=atque&presage=10&page=1"
                         },
                         "method": "GET",
                         "header": [
@@ -162,7 +233,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"Hello World\",\"content\":\"\u65e9\u5b89\"}"
+                            "raw": "{\"user_id\":17,\"title\":\"Hello World\",\"content\":\"\u65e9\u5b89\"}"
                         },
                         "description": "",
                         "auth": {
@@ -184,21 +255,8 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/post\/:id",
-                            "query": [
-                                {
-                                    "key": "title",
-                                    "value": "Hello+World",
-                                    "description": "\u6587\u7ae0\u6a19\u984c",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "content",
-                                    "value": "%E6%97%A9%E4%B8%8A%E5%A5%BD",
-                                    "description": "\u6587\u7ae0\u5167\u5bb9",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/post\/:id?title=Hello+World&content=%E6%97%A9%E4%B8%8A%E5%A5%BD",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/post\/:id",
                             "variable": [
                                 {
                                     "id": "id",
@@ -221,7 +279,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"rbeuhgxudk\",\"content\":\"corporis\"}"
+                            "raw": "{\"user_id\":8,\"title\":\"Hello World\",\"content\":\"\u65e9\u4e0a\u597d\"}"
                         },
                         "description": "",
                         "auth": {
